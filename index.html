@@ -42,7 +42,7 @@
               </section> 
         </section>
         </div>
-
+        <!--END begin-->
         <!--info card-->
         <div class="col-8 col-position stack-top" id="infoContainer" style="visibility: hidden;">
             <section class="card">
@@ -53,7 +53,7 @@
                          View high scores</a>
                 </div>
                 <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0 card-text2" style="color:#04204C;"> 
-                   <p class="mb-0" style="margin-right: 10px;" id="timer">Timer:Not Started</p> 
+                   <p class="mb-0" style="margin-right: 10px;">Timer:Not Started</p> 
                 </div>
                 </article>
                 <article class="card-body card text-center">
@@ -90,11 +90,11 @@
                     <h5 class="card-title" style="font-weight: bold; color: #04204c;" id="question">Quiz Question</h5>
                     <div class="card-text">
                         <article class="list-group" id="answer-btn">
-                              <button type="button" data-number="1" id="btn0" class="list-group-item list-group-item-action">1</button>
-                              <button type="button" data-number="2" id="btn1" class="list-group-item list-group-item-action">2</button>
-                              <button type="button" data-number="3" id="btn2" class="list-group-item list-group-item-action">3</button>
-                              <button type="button" data-number="4" id="btn3" class="list-group-item list-group-item-action">4</button>
-                              <button type="button" data-number="5" id="btn4" class="list-group-item list-group-item-action">5</button>
+                              <button type="button" style="background-color: #04204c;"  data-number="1" id="btn0" class="btn btn-primary mb-2">1</button>
+                              <button type="button" style="background-color: #04204c;"  data-number="2" id="btn1" class="btn btn-primary mb-2">2</button>
+                              <button type="button" style="background-color: #04204c;"  data-number="3" id="btn2" class="btn btn-primary mb-2">3</button>
+                              <button type="button" style="background-color: #04204c;"  data-number="4" id="btn3" class="btn btn-primary mb-2">4</button>
+                              <button type="button" style="background-color: #04204c;"  data-number="5" id="btn4" class="btn btn-primary mb-2">5</button>
                         </article>
                     </div>
                 </article>
@@ -103,7 +103,61 @@
                 </article>
             </section>
         </div>
-          <!-- /Quiz -->
+          <!-- END /Quiz -->
+        
+          <!--All done section-->
+          <div class="col-8 col-position stack-top" id="allDoneContainer" style="visibility:hidden;">
+            <section class="card">
+                <article class="row clearfix">
+                    <div class="col-sm-5 col-md-6">
+                        <a href="#" class="card-link"
+                        id="viewHighscores" style="margin-left: 10px; cursor: pointer; color:#04204C;" >
+                         View high scores</a>
+                </div>
+                <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0 card-text2" style="color:#04204C;"> 
+                   <p class="mb-0" id="final-score" style="margin-right: 10px;"></p> 
+                </div>
+                </article>
+                <article class="card-body card text-center">
+                <h5 class="card-title" style="font-weight: bold; color: #04204c;">All done!</h5>
+                <p class="card-text">Save your scores.</p>
+                    <div class="row">
+                     <p>Your final score is:</p>
+                     <div class="col">Enter your initials:</div>
+                     <div class="col"><input type="text" name="initials" id="scores"></div>
+                    <div class="col"> <a href="#" class="btn btn-primary" style="background-color:#04204C; color: white;" id="enterInitials" type="submit">submit</a></div>
+                </article>
+                    <article class="card-footer text-muted" id="final">
+                        Coding Quiz Challenge:4
+                    </article>
+                </section>
+          </div>
+          <!--div class="col-8 col-position stack-top" id="viewHighScores" style="visibility:hidden;">
+            <section class="card">
+                <article class="row clearfix">
+                    <div class="col-sm-5 col-md-6">
+                </div>
+                <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">  
+                </div>
+                </article>
+                <article class="card-body card ">
+                <h5 class="card-title" style="font-weight: bold; color: #04204c;">High Scores:</h5>
+                    <div class="row">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">An item</li>
+                            <li class="list-group-item">A second item</li>
+                            <li class="list-group-item">A third item</li>
+                        </ul>
+                     <div class="col movebtn"><a href="#" class="btn btn-primary" style="background-color:#04204C; color: white;" id="go-back" type="submit">Go Back</a></div>
+                    <div class="col"> <a href="#" class="btn btn-primary" style="background-color:#04204C; color: white;" id="clear" type="submit">Clear High Scores</a></div>
+                        </div>
+                </article>
+                    <article class="card-footer text-muted">
+                        Coding Quiz Challenge:4
+                    </article>
+                </section>
+          </div>
       </div>
+      
 </body>
 </html>

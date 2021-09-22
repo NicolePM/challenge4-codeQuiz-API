@@ -1,13 +1,6 @@
 /* ------- global variable declarations ------- */
+let shuffledQuestions, currentQuestionIndex;
 
-let availableQuesions = [];
-let currentQuestion = {};
-let shuffledQuestions, currentQuestionIndex=0;
-var correctAns = 0;
-var questionNum = 0;
-var scoreResult;
-var questionIndex = 0;
-var totalTime = 60;
 
 /* --------------- doc query selectors --------------- */
 const beginQuiz=document.getElementById("beginQuiz");
@@ -17,15 +10,19 @@ const introContainerEl=document.getElementById("introduction");
 const quizContainerEl=document.getElementById("quiz_box");
 const quizQuestionEl=document.getElementById("question");
 const answerButtonEl=document.getElementById("answer-btn");
-const timer = document.getElementById("timer");
-const answerMeter= document.getElementById("footer-text");
-// const timeLeft = document.getElementById("timeLeft");
-// const timesUp = document.getElementById("timesUp");
+const timerEl = document.getElementById("timer");
+const answerMeter=document.getElementById("footer-text");
+const allDoneEl=document.getElementById("allDoneContainer");
+const enterInitials=document.getElementById("enterInitials");
+
+
 var choice1 = document.getElementById("btn0");
 var choice2 = document.getElementById("btn1");
 var choice3 = document.getElementById("btn2");
 var choice4 = document.getElementById("btn3");
 var choice5 = document.getElementById("btn4");
+var totalTime= 75;
+var checkedAns;
 
 //const choices= Array.from(document.getElementsByClassName("list-group-item-action"));
 
@@ -95,37 +92,49 @@ let quizArray = [
 ];
 beginQuiz.addEventListener("click", getRules)
 
+enterInitials.addEventListener("click", function(){
+    var saveToLocalStorage=document.getElementById("scores");
+    localStorage.setItem(saveToLocalStorage, timerEl.innerText);
+    console.log()
+})
+
 function getRules()
-{
-    console.log("started");
+{ 
+    debugger
     introContainerEl.style.visibility="hidden";
     informationContainerEl.style.visibility="visible";
     startQuiz.addEventListener("click", populateQuiz);
-
-    // if(document.getElementById("exitQuiz").clikced==true){
-    //     alert("You are exiting the quiz");
-    //     return false;
-    //     windows.location.reload(true);}
-
+    return;
 }
 
 function populateQuiz()
 {
+    //debugger;
+    runTimer();
+    checkLocalStorageAvailability();
     console.log("started");
-    //questionIndex = 0;
-    currentQuestionIndex = 0
-    //timeLeft.textContent = totalTime;
+    currentQuestionIndex = 0;
     informationContainerEl.style.visibility="hidden";
     quizContainerEl.style.visibility="visible";
     shuffledQuestions=quizArray.sort(()=> Math.random() -.5)
-    currentQuestionIndex=0;
-    populateNextQuestions();
+  
+    populateNextQuestions()
+    
 
 }
 
 function populateNextQuestions()
 {
+   debugger;
+    //conditional loop to check index value to stop the quiz
+    if (currentQuestionIndex <10 && totalTime>1){
     showQuestions(shuffledQuestions[currentQuestionIndex])
+    }
+    else{
+        gameOver();
+    }
+    return true;
+    
 }
 
 function showQuestions(question)
@@ -138,52 +147,97 @@ function showQuestions(question)
         choice4.textContent=quizArray[currentQuestionIndex].options[3];
         choice5.textContent=quizArray[currentQuestionIndex].options[4];
         
-        let btns = document.querySelectorAll("[data-number]");
-        //console.log(btns);
-        for (i of btns) {
-          i.addEventListener('click', function() {
-            // console.log(this.innerText);
-            // console.log(quizArray[currentQuestionIndex].correct);
-           checkAnswer(this.innerText);
-            
-          }); 
-    }
+         let btns = document.querySelectorAll("[data-number]");
+         for (i of btns) {
+         i.addEventListener('click', function() {
+             event.preventDefault();
+             checkAnswer(this.innerText);
+            populateNextQuestions();
+              }); 
+            }
+    
 }
-             //console.log(this);
-            //var x= document.getElementById(this).ariaValueMax;
-
-        //   });
-        // }
-    
-    
-
+ 
+  
+    //Checking answers if they are correct or not
     function checkAnswer(answer)
     {
-            if(answer==quizArray[currentQuestionIndex].correct)
+        
+        debugger
+            if(answer===quizArray[currentQuestionIndex].correct)
             {
-                alert("You are right!")
-                answerMeter.innerText="Correct";
-                answerMeter.style="text-align: center; font-weight: bold; "
+                answerMeter.textContent="Correct!";
+                    answerMeter.style="text-align: center; font-weight: bold;"
+                    currentQuestionIndex++;
+                    checkedAns=answerMeter.textContent;
             }
             else{
-                    alert("You are wrong!")
-                    answerMeter.innerText="Wrong!";
-                    answerMeter.style="text-align: center; font-weight: bold; "
+                answerMeter.textContent="Wrong";
+                answerMeter.style="text-align: center; font-weight: bold;"
+                currentQuestionIndex++;
+                totalTime= totalTime-10;
+                timerEl.innerText=totalTime;
+                checkedAns=answerMeter.textContent;
             }
+           // answerMeter.textContent=""
+           
+            
+    }
+    
+    function runTimer()
+    {
+        // Timer that counts down from 60 seconds
+  totalTime=75;
+    var timeInterval = setInterval(function() {
+      // As long as the `timeLeft` is greater than 1
+      if (totalTime > 1) {
+        timerEl.innerText = totalTime 
+        totalTime--;
+      }
+        else {
+        // Once `timeLeft` gets to 0, set `timerEl` to an empty string
+        timerEl.textContent = 'Times UP!';
+        // Use `clearInterval()` to stop the timer
+        clearInterval(timeInterval);
+        // Call the `displayMessage()` function
+       
+      }
+    }, 1000);
     }
 
-    function runTimer()
-    {}
-        //   const button = document.createElement('button')
-        //   button.innerText = option.text
-        //   button.classList.add("list-group-item")
-        //   button.classList.add('list-group-item-action')
-        //   if (option.correct) {
-        //     button.dataset.correct = option.correct
-        //   }
-        //   button.addEventListener('click', selectAnswer)
-        //   answerButtonEl.appendChild(button)
+    function checkLocalStorageAvailability()
+    {
+            var test = 'NM:' + " 58";
+            try {
+                localStorage.setItem(test, test);
+                console.log(test);
+                localStorage.removeItem(test);
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+    
+        function gameOver()
+        {
+        if (totalTime==0)
+        {
+            quizQuestionEl.style.visibility="hidden"
+            quizContainerEl.style.visibility="hidden"
+            allDoneEl.style.visibility="visible";
+            answerMeter.innerText= "TIMES UP!";
+        }
+        else{
+            quizQuestionEl.style.visibility="hidden";
+            quizContainerEl.style.visibility="hidden";
+            allDoneEl.style.visibility="visible";
+            document.getElementById("final").innerText=checkedAns;
+            document.getElementById("final-score").innerText=totalTime;
         
+        }
+    }
+
+  
       
 
 
